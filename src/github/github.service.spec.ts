@@ -26,7 +26,7 @@ describe('GithubService', () => {
     const response: AxiosResponse<any> = {
       data: {},
       headers: headers,
-      config: { url: 'http://localhost:3000/mockUrl' },
+      config: {} as any,
       status: 200,
       statusText: 'OK',
     };
@@ -41,7 +41,7 @@ describe('GithubService', () => {
     const response: AxiosResponse<any> = {
       data: {},
       headers: headers,
-      config: { url: 'http://localhost:3000/mockUrl' },
+      config: {} as any,
       status: 200,
       statusText: 'OK',
     };
@@ -54,7 +54,7 @@ describe('GithubService', () => {
     const response: AxiosResponse<any> = {
       data: {},
       headers: headers,
-      config: { url: 'http://localhost:3000/mockUrl' },
+      config: {} as any,
       status: 200,
       statusText: 'OK',
     };
@@ -63,14 +63,6 @@ describe('GithubService', () => {
     expect(isValid).not.toBeTruthy();
   });
   it('shouldReturnFalseIfAnExceptionIsCaught', async () => {
-    const headers = {};
-    const response: AxiosResponse<any> = {
-      data: {},
-      headers: headers,
-      config: { url: 'http://localhost:3000/mockUrl' },
-      status: 200,
-      statusText: 'OK',
-    };
     jest.spyOn(httpService, 'get').mockImplementation(() => {
       throw new Error();
     });
@@ -81,7 +73,7 @@ describe('GithubService', () => {
     const response: AxiosResponse<any> = {
       data: 'some_key=1&access_token=token',
       headers: {},
-      config: { url: 'http://localhost:3000/mockUrl' },
+      config: {} as any,
       status: 200,
       statusText: 'OK',
     };
@@ -94,7 +86,7 @@ describe('GithubService', () => {
     const response: AxiosResponse<any> = {
       data: 'error',
       headers: {},
-      config: { url: 'http://localhost:3000/mockUrl' },
+      config: {} as any,
       status: 200,
       statusText: 'OK',
     };
@@ -108,7 +100,7 @@ describe('GithubService', () => {
     const response: AxiosResponse<any> = {
       data: 'some_key=1&hello=world',
       headers: {},
-      config: { url: 'http://localhost:3000/mockUrl' },
+      config: {} as any,
       status: 200,
       statusText: 'OK',
     };
@@ -122,7 +114,7 @@ describe('GithubService', () => {
     const response: AxiosResponse<any> = {
       data: 'some_key=1&access_token',
       headers: {},
-      config: { url: 'http://localhost:3000/mockUrl' },
+      config: {} as any,
       status: 200,
       statusText: 'OK',
     };
@@ -136,7 +128,7 @@ describe('GithubService', () => {
     const response: AxiosResponse<any> = {
       data: { login: 'username' },
       headers: {},
-      config: { url: 'http://localhost:3000/mockUrl' },
+      config: {} as any,
       status: 200,
       statusText: 'OK',
     };
@@ -148,7 +140,7 @@ describe('GithubService', () => {
     const response: AxiosResponse<any> = {
       data: {},
       headers: {},
-      config: { url: 'http://localhost:3000/mockUrl' },
+      config: {} as any,
       status: 200,
       statusText: 'OK',
     };
@@ -168,7 +160,7 @@ describe('GithubService', () => {
     const response: AxiosResponse<any> = {
       data: {},
       headers: {},
-      config: { url: 'http://localhost:3000/mockUrl' },
+      config: {} as any,
       status: 500,
       statusText: 'OK',
     };
