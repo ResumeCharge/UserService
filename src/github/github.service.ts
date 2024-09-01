@@ -1,11 +1,13 @@
 import {
   BadRequestException,
+  Inject,
   Injectable,
   InternalServerErrorException,
-  Logger,
+  LoggerService,
 } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
 const GITHUB_TOKEN_ENDPOINT = 'https://api.github.com/';
 const GITHUB_USER_ENDPOINT = 'https://api.github.com/user';
@@ -16,7 +18,8 @@ const OAUTH_REPO_SCOPE = 'repo';
 export class GithubService {
   constructor(
     private readonly httpService: HttpService,
-    private readonly logger: Logger,
+    @Inject(WINSTON_MODULE_NEST_PROVIDER)
+    private readonly logger: LoggerService,
   ) {}
 
   async isTokenValid(token: string): Promise<boolean> {

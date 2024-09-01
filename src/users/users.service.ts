@@ -1,8 +1,9 @@
 import {
   BadRequestException,
+  Inject,
   Injectable,
   InternalServerErrorException,
-  Logger,
+  LoggerService,
   NotFoundException,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -14,6 +15,7 @@ import { InsertResult, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EncryptedToken } from '../crypto/entity/encryptedToken.entity';
 import { STANDALONE_USER_ID } from '../app.constants';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
 @Injectable()
 export class UsersService {
@@ -24,7 +26,8 @@ export class UsersService {
     private encryptedTokenRepository: Repository<EncryptedToken>,
     private githubService: GithubService,
     private cryptoService: CryptoService,
-    private readonly logger: Logger,
+    @Inject(WINSTON_MODULE_NEST_PROVIDER)
+    private readonly logger: LoggerService,
   ) {}
 
   // Create the standalone user if they don't exist

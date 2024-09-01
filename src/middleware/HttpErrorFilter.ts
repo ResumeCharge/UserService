@@ -5,16 +5,17 @@ import {
   ExceptionFilter,
   HttpException,
   HttpStatus,
-  Logger,
+  Inject,
+  LoggerService,
 } from '@nestjs/common';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
 @Catch()
 export class HttpErrorFilter implements ExceptionFilter {
-  private readonly logger: Logger;
-
-  constructor() {
-    this.logger = new Logger();
-  }
+  constructor(
+    @Inject(WINSTON_MODULE_NEST_PROVIDER)
+    private readonly logger: LoggerService,
+  ) {}
 
   catch(exception: Error, host: ArgumentsHost): any {
     const ctx = host.switchToHttp();
