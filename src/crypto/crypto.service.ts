@@ -7,8 +7,7 @@ import { EncryptedTokenObject } from './crypto.interface';
 
 @Injectable()
 export class CryptoService {
-  constructor(private readonly configService: ConfigService) {
-  }
+  constructor(private readonly configService: ConfigService) {}
 
   encrypt = async (value: string) => {
     const iv = randomBytes(16);
