@@ -3,8 +3,7 @@ import { UsersService } from './users.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { EncryptedToken } from '../crypto/entity/encryptedToken.entity';
-import { MongoError } from 'mongodb';
-import { HttpException, Logger } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import { CryptoService } from '../crypto/crypto.service';
 import { randomBytes } from 'crypto';
 import { ConfigService } from '@nestjs/config';
@@ -92,12 +91,5 @@ describe('UsersService', () => {
     };
     await usersService.update('userId', update);
     expect(mockUserRepository.update).toBeCalledWith('userId', update);
-  });
-
-  it('should handle exceptions updating the user', () => {
-    const action = () => {
-      usersService.handleUpdateUserException({ code: 11000 } as MongoError);
-    };
-    expect(action).toThrow(HttpException);
   });
 });

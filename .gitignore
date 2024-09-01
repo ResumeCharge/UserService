@@ -27,7 +27,8 @@ yarn-error.log
 /example
 
 dist/
-.development.env
+.env.development
+logs/
 firebase-private-key.json
 
 # tests
