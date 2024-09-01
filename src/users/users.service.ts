@@ -1,15 +1,14 @@
 import {
   BadRequestException,
-  HttpException,
   Injectable,
   InternalServerErrorException,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { GithubService } from '../github/github.service';
 import { CryptoService } from '../crypto/crypto.service';
-import { MongoError } from 'mongodb';
 import { User } from './entities/user.entity';
 import { InsertResult, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -24,6 +23,7 @@ export class UsersService {
     private encryptedTokenRepository: Repository<EncryptedToken>,
     private githubService: GithubService,
     private cryptoService: CryptoService,
+    private readonly logger: Logger,
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<InsertResult> {
@@ -111,9 +111,8 @@ export class UsersService {
     return this.githubService.getGithubUsernameFromToken(token);
   }
 
-  handleUpdateUserException(exception: MongoError) {
-    if (exception.code === 11000) {
-      throw new HttpException('Duplicate record', 409);
-    }
+  //TODO
+  handleUpdateUserException(exception: any) {
+    this.logger.error('Error updating user', exception);
   }
 }
