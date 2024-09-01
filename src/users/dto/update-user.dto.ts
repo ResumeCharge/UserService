@@ -5,8 +5,11 @@ import { IsOptional, IsString } from 'class-validator';
 export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsString()
   @IsOptional()
-  githubTokenId: string;
+  githubTokenId?: string;
   @IsString()
   @IsOptional()
-  githubUserName: string;
+  githubUserName?: string;
+  @IsString()
+  @IsOptional()
+  githubToken?: string;
 }

@@ -40,6 +40,9 @@ export class UsersService {
 
   async update(userId: string, updateUserDto: UpdateUserDto) {
     try {
+      if (updateUserDto.githubToken) {
+        await this.saveToken(userId, updateUserDto.githubToken);
+      }
       return await this.usersRepository.update(userId, updateUserDto);
     } catch (exception) {
       return this.handleUpdateUserException(exception);
@@ -72,8 +75,7 @@ export class UsersService {
     }
   }
 
-  async getTokenFromCodeAndSave(userId: string, code: string) {
-    const token = await this.githubService.getOauthTokenFromCode(code);
+  async saveToken(userId: string, token: string) {
     const isValid = await this.githubService.isTokenValid(token);
     if (!isValid) {
       throw new BadRequestException('Token retrieved using code was invalid');
