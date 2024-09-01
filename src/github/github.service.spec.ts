@@ -69,61 +69,6 @@ describe('GithubService', () => {
     const isValid = await githubService.isTokenValid('token');
     expect(isValid).not.toBeTruthy();
   });
-  it('shouldReturnOauthTokenFromCode', async () => {
-    const response: AxiosResponse<any> = {
-      data: 'some_key=1&access_token=token',
-      headers: {},
-      config: {} as any,
-      status: 200,
-      statusText: 'OK',
-    };
-    jest.spyOn(configService, 'get').mockImplementation(() => '');
-    jest.spyOn(httpService, 'post').mockImplementation(() => of(response));
-    const token = await githubService.getOauthTokenFromCode('code');
-    expect(token).toBe('token');
-  });
-  it('shouldThrowAnErrorIfTheResponseErrors', async () => {
-    const response: AxiosResponse<any> = {
-      data: 'error',
-      headers: {},
-      config: {} as any,
-      status: 200,
-      statusText: 'OK',
-    };
-    jest.spyOn(configService, 'get').mockImplementation(() => '');
-    jest.spyOn(httpService, 'post').mockImplementation(() => of(response));
-    await expect(githubService.getOauthTokenFromCode('code')).rejects.toThrow(
-      BadRequestException,
-    );
-  });
-  it('shouldThrowAnErrorIfNoTokenIsPresent', async () => {
-    const response: AxiosResponse<any> = {
-      data: 'some_key=1&hello=world',
-      headers: {},
-      config: {} as any,
-      status: 200,
-      statusText: 'OK',
-    };
-    jest.spyOn(configService, 'get').mockImplementation(() => '');
-    jest.spyOn(httpService, 'post').mockImplementation(() => of(response));
-    await expect(githubService.getOauthTokenFromCode('code')).rejects.toThrow(
-      BadRequestException,
-    );
-  });
-  it('shouldThrowAnErrorIfTheTokenIsMalformed', async () => {
-    const response: AxiosResponse<any> = {
-      data: 'some_key=1&access_token',
-      headers: {},
-      config: {} as any,
-      status: 200,
-      statusText: 'OK',
-    };
-    jest.spyOn(configService, 'get').mockImplementation(() => '');
-    jest.spyOn(httpService, 'post').mockImplementation(() => of(response));
-    await expect(githubService.getOauthTokenFromCode('code')).rejects.toThrow(
-      BadRequestException,
-    );
-  });
   it('shouldReturnTheUsernameFromTheToken', async () => {
     const response: AxiosResponse<any> = {
       data: { login: 'username' },

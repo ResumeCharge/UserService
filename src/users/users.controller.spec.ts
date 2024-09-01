@@ -5,7 +5,6 @@ import { HttpModule } from '@nestjs/axios';
 import { Logger, NotFoundException } from '@nestjs/common';
 import { GithubService } from '../github/github.service';
 import { CryptoService } from '../crypto/crypto.service';
-import { randomBytes } from 'crypto';
 import { ConfigService } from '@nestjs/config';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
@@ -72,25 +71,10 @@ describe('UsersController', () => {
   it('should create a new user', async () => {
     await usersController.create({
       userId: 'userId',
-      email: 'user2@email.com',
     });
     expect(mockUserRepository.insert).toBeCalled();
   });
-  it('should save the user token', async () => {
-    const users = await usersController.findAll();
-    // let user = users[0];
-    jest
-      .spyOn(githubService, 'getOauthTokenFromCode')
-      .mockResolvedValue('token');
-    jest.spyOn(githubService, 'isTokenValid').mockResolvedValue(true);
-    jest
-      .spyOn(githubService, 'getGithubUsernameFromToken')
-      .mockResolvedValue('username');
-    jest.spyOn(cryptoService, 'encrypt').mockResolvedValue({
-      value: randomBytes(16),
-      iv: randomBytes(16),
-    });
-  });
+
   it('should return the user token', async () => {
     jest
       .spyOn(mockTokenRepository, 'getOne')

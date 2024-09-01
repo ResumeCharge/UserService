@@ -12,18 +12,6 @@ export class User {
   @Column('bigint', { default: Date.now(), nullable: false })
   lastUpdatedAt: number;
 
-  @Column({ nullable: true })
-  email: string;
-
-  @Column({ default: false, nullable: false })
-  isEmailVerified: boolean;
-
-  @Column({ default: true, nullable: false })
-  isActive: boolean;
-
-  @Column({ default: false, nullable: false })
-  isPremium: boolean;
-
   @OneToOne(() => EncryptedToken, (token) => token.id, {
     onDelete: 'CASCADE',
     cascade: true,

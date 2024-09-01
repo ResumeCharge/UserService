@@ -5,7 +5,6 @@ import { User } from './entities/user.entity';
 import { EncryptedToken } from '../crypto/entity/encryptedToken.entity';
 import { Logger } from '@nestjs/common';
 import { CryptoService } from '../crypto/crypto.service';
-import { randomBytes } from 'crypto';
 import { ConfigService } from '@nestjs/config';
 import { GithubService } from '../github/github.service';
 import { HttpModule } from '@nestjs/axios';
@@ -60,28 +59,6 @@ describe('UsersService', () => {
 
   afterEach(async () => {
     jest.clearAllMocks();
-  });
-
-  it('should get a token and save it to the user', async () => {
-    jest
-      .spyOn(githubService, 'getOauthTokenFromCode')
-      .mockResolvedValue('token');
-    jest.spyOn(githubService, 'isTokenValid').mockResolvedValue(true);
-    jest
-      .spyOn(githubService, 'getGithubUsernameFromToken')
-      .mockResolvedValue('username');
-    jest
-      .spyOn(cryptoService, 'encrypt')
-      .mockResolvedValue({ value: randomBytes(16), iv: randomBytes(16) });
-    jest
-      .spyOn(mockTokenRepository, 'insert')
-      .mockResolvedValue({ raw: [{ id: '1234' }] });
-    await usersService.getTokenFromCodeAndSave('userId', 'code');
-    expect(mockUserRepository.update).toBeCalled();
-    expect(githubService.getOauthTokenFromCode).toBeCalled();
-    expect(githubService.getGithubUsernameFromToken).toBeCalled();
-    expect(cryptoService.encrypt).toBeCalled();
-    expect(mockTokenRepository.insert).toBeCalled();
   });
 
   it('should update the user', async () => {

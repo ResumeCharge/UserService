@@ -2,16 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
-import {
-  FIREBASE_EMAIL,
-  FIREBASE_PRIVATE_KEY,
-  FIREBASE_PROJECT_ID,
-  GOOGLE_APPLICATION_CREDENTIALS,
-  PORT,
-} from './app.constants';
+import { PORT } from './app.constants';
 import { HttpErrorFilter } from './middleware/HttpErrorFilter';
-import { Credential, initializeApp } from 'firebase-admin/app';
-import admin from 'firebase-admin';
 import {
   utilities as nestWinstonModuleUtilities,
   WinstonModule,
@@ -30,22 +22,6 @@ const winstonConsoleOptions = {
       appName: true,
     }),
   ),
-};
-
-const getFirebaseCredential = (configService: ConfigService): Credential => {
-  if (configService.get(GOOGLE_APPLICATION_CREDENTIALS)) {
-    return admin.credential.applicationDefault();
-  } else if (configService.get(FIREBASE_PRIVATE_KEY)) {
-    return admin.credential.cert({
-      projectId: configService.get(FIREBASE_PROJECT_ID),
-      clientEmail: configService.get(FIREBASE_EMAIL),
-      privateKey: configService.get(FIREBASE_PRIVATE_KEY),
-    });
-  } else {
-    throw new Error(
-      'Unable to initialize App, cannot find firebase credentials',
-    );
-  }
 };
 
 async function bootstrap() {
@@ -82,10 +58,6 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   app.enableCors();
   app.useGlobalFilters(new HttpErrorFilter());
-  const credential: Credential = getFirebaseCredential(configService);
-  initializeApp({
-    credential,
-  });
   await app.listen(configService.get(PORT));
 }
 
