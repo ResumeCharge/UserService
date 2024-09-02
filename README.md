@@ -44,6 +44,7 @@ in Option 1.
 <!-- GETTING STARTED -->
 
 ## Getting Started
+# The easiest way to get started is by following the instructions in https://github.com/ResumeCharge/standalone. This will deploy the entire ResumeCharge stack using Docker.
 
 The instructions below are not detailed/complete at the moment, I am working to write a detailed guide for setting up
 this project if you want to spin up your own instance. If you are interested in developing or running ResumeCharge
