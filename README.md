@@ -45,29 +45,4 @@ in Option 1.
 
 ## Getting Started
 
-The instructions below are not detailed/complete at the moment, I am working to write a detailed guide for setting up
-this project if you want to spin up your own instance. If you are interested in developing or running ResumeCharge
-locally please reach-out to me at [adam@adamlawson.dev](mailto:adam@adamlawson.dev).
-
-### Prerequisites
-
-* NodeJs/NPM
-* [GeneratorService](https://github.com/ResumeCharge/GeneratorService) deployed and running
-* [DeploymentService](https://github.com/ResumeCharge/DeploymentService) deployed and running
-
-### Installation
-
-1. Clone the repo
-   ```sh
-   git clone https://github.com/ResumeCharge/UserService.git
-   ```
-2. Install dependencies
-   ```sh
-   npm install
-   ```
-3. Configure required parameters in `.development.env`
-4. Setup firebase key in `firebase-private-key.json`
-5. Run the deployment service
-   ```sh
-   npm run start
-   ```
+# Follow the instructions in https://github.com/ResumeCharge/standalone. This will deploy the entire ResumeCharge stack using Docker.
